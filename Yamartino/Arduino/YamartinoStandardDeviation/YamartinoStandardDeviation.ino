@@ -25,16 +25,19 @@
 // VALUES FROM THE COMPASS
 // all the stats are calculated using this single pass method
 // http://en.wikipedia.org/wiki/Yamartino_method
+
 float compassHeadingDegrees = 0; // the compass heading in degrees
 // history buffer
 const int historyLength = 100; // change to set size of array
 float historyCos[historyLength]; // we keep track of X and Y 
 float historySin[historyLength];
+
 // history buffer statistics
 float compassAvg = 0;
 float compassStd = 0;
 
 void setup(){
+  Serial.begin(9600);
   // fill the history buffer with zeros, or else you won't
   // know what is in there.  it could take the values from
   // the last time the program ran, which will restult in
@@ -48,22 +51,19 @@ void setup(){
 void loop() {
 
   compassHeadingDegrees = readCompassHeading(); // get the compass reading as degrees
+ 
   addCompassReadingToHistoryBuffer(compassHeadingDegrees); // this will add the values to the buffer
   analyzeHistoryBuffer(); // this will calculate the current mean and standard 
-  // we don't really need to calculate this every time, but we will for
-  // debugging purposes. we really only need to caculate it when we know
-  // that we can actually choose a track.  but for 
-  // the moment, we should just leave it here to help debug.
 
-  /////// DEBUGGING // REMOVE WHEN ANNOYING OR WHEN MP3 IS HOOKED UP
+  /////// DEBUGGING 
   Serial.print("CURRENT HEADING = ");
   Serial.print(compassHeadingDegrees);
   Serial.print(" AVG = ");
   Serial.print(degrees(compassAvg));
   Serial.print(" STDEV = ");
   Serial.println(degrees(compassStd));
-  /////// DEBUGGING // REMOVE WHEN ANNOYING OR WHEN MP3 IS HOOKED UP
-
+  /////// DEBUGGING 
+  
   delay(25); // you'll need some delay in there to keep sane.  maybe more, maybe less
 }
 
@@ -117,6 +117,8 @@ void analyzeHistoryBuffer() {
 }
 
 float readCompassHeading() {
+  // this is currently returning "dummy" data.  you should read your compas module here.
+  
   return compassHeadingDegrees + random(-20,20); // a random walk ... your sensor reading code should be in here
 }
 
