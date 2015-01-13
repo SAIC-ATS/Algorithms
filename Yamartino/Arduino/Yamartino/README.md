@@ -25,14 +25,14 @@ averages:
 
 In the main loop, read the heading once per second:
 
-  float heading = getWindDirection(); /* user-define */
-  yamartino.add(heading);
-  delay(1000);  
+	float heading = getWindDirection(); /* user-define */
+	yamartino.add(heading);
+	delay(1000);  
 
 Anytime you want an average, just use:
 
-  float avg = yamartino.averageHeading());
-  float std = yamartino.standardDeviation());
+	float avg = yamartino.averageHeading());
+	float std = yamartino.standardDeviation());
 
 After installing the Yamartino Library (and restarting the Arduino IDE), see
 File -> Examples -> Yamartino -> AverageWind for a complete example.
