@@ -1,0 +1,4 @@
+Yamartino	KEYWORD1
+add		KEYWORD2
+averageHeading	KEYWORD2
+standardDeviation	KEYWORD2
