@@ -39,8 +39,8 @@
 Yamartino::Yamartino(int sampleSize) {
 
   historyLength = sampleSize;
-  historyCos = (float*) realloc(historyCos, historyLength * sizeof(float));
-  historySin = (float*) realloc(historySin, historyLength * sizeof(float));
+  historyCos = (float*) malloc(historyLength * sizeof(float));
+  historySin = (float*) malloc(historyLength * sizeof(float));
      
   // fill the history buffer with zeros, or else you won't
   // know what is in there.  it could take the values from
@@ -50,6 +50,14 @@ Yamartino::Yamartino(int sampleSize) {
   memset(historySin, 0, sizeof(historySin));
   
 }  
+
+/**
+ * Destructor - free memory.
+ */
+Yamartino::~Yamartino() {
+  free(historyCos);
+  free(historySin);
+}
 
 /**
  * Add a new value to the data set.
@@ -65,7 +73,7 @@ void Yamartino::add(float valueDegrees) {
   // we must keep the SIN and COS in order to calculate the
   // angular averages + stdevs correctly (see YAMARTINO METHOD)
 
-  for (int i = sizeof(historyCos) - 1; i >= 0; i--) {
+  for (int i = historyLength - 1; i >= 0; i--) {
     if(i == 0) {
       historyCos[0] = cos(valueRadians); // put new val in the 0 position
       historySin[0] = sin(valueRadians); // put new val in the 0 position
@@ -85,7 +93,7 @@ void Yamartino::analyzeHistoryBuffer() {
   float sumX = 0;
   float sumY = 0;
 
-  for (int i = 0; i < sizeof(historyCos); i++) {
+  for (int i = 0; i < historyLength; i++) {
     sumX += historyCos[i];
     sumY += historySin[i];
   }

@@ -34,6 +34,7 @@ class Yamartino {
   
  public:
    Yamartino(int length);
+   ~Yamartino();
    void add(float heading);
    float averageHeading(void);
    float standardDeviation(void); 
