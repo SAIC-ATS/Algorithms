@@ -113,16 +113,16 @@ void Yamartino::analyzeHistoryBuffer() {
  */
 float Yamartino::averageHeading() {
   analyzeHistoryBuffer();
-  return compassAvg;
+  return compassAvg * 180 / M_PI;
 }
 
 /**
  * Get standard deviation in current data set.
- * returns: standard deviation.  Lower scores mean less turbulent wind.
+ * returns: standard deviation.
  */
 float Yamartino::standardDeviation() {
   analyzeHistoryBuffer();
-  return compassStd;
+  return compassStd * 180 / M_PI;
 }
 
 
